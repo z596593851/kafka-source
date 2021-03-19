@@ -102,6 +102,7 @@ public class SaslClientAuthenticator implements Authenticator {
         this.correlationId = -1;
     }
 
+    @Override
     public void configure(TransportLayer transportLayer, PrincipalBuilder principalBuilder, Map<String, ?> configs) throws KafkaException {
         try {
             this.transportLayer = transportLayer;
@@ -147,6 +148,7 @@ public class SaslClientAuthenticator implements Authenticator {
      * The messages are sent and received as size delimited bytes that consists of a 4 byte network-ordered size N
      * followed by N bytes representing the opaque payload.
      */
+    @Override
     public void authenticate() throws IOException {
         if (netOutBuffer != null && !flushNetOutBufferAndUpdateInterestOps())
             return;
@@ -247,14 +249,17 @@ public class SaslClientAuthenticator implements Authenticator {
         return serverPacket;
     }
 
+    @Override
     public Principal principal() {
         return new KafkaPrincipal(KafkaPrincipal.USER_TYPE, clientPrincipalName);
     }
 
+    @Override
     public boolean complete() {
         return saslState == SaslState.COMPLETE;
     }
 
+    @Override
     public void close() throws IOException {
         if (saslClient != null)
             saslClient.dispose();

@@ -17,7 +17,7 @@
 package org.apache.kafka.common.protocol.types;
 
 
-import kafka.common.KafkaException;
+import org.apache.kafka.common.KafkaException;
 
 /**
  *  Thrown if the protocol schema validation fails while parsing request or response.
